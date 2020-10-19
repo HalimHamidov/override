@@ -9,7 +9,7 @@ unsigned int get_unum() {
     return num;
 }
 
-unsigned int store_number(int *tab) {
+unsigned int store_number(unsigned int *tab) {
     unsigned int number;
     unsigned int index;
 
@@ -18,7 +18,7 @@ unsigned int store_number(int *tab) {
     printf( " Index: ");
     index = get_unum();
 
-    if (index % 3 != 0 || (number >> 0x18) == 0xb7) { //3070230528 <= number < 3087007744
+    if (index % 3 != 0 || (number >> 0x18) == 0xb7) { //The number must not start with 0xb7
         puts(" *** ERROR! ***");
         puts("   This index is reserved for wil!");
         puts(" *** ERROR! ***");
@@ -29,7 +29,7 @@ unsigned int store_number(int *tab) {
     return 0;
 }
 
-int read(int *tab){
+int read(unsigned int *tab){
     printf(" Index: ");
     unsigned int n = get_unum();
     printf(" Number at data[%u] is %u\n", n, tab[n]); //Line 37 multiplies index by 4 because we have a table of int // Line 43 retrieves value at pointer in tab
@@ -38,7 +38,7 @@ int read(int *tab){
 int main(int argc, char **argv, char **envp) {
     // $esp = $ebp - 0x8 => alignment Line<+6>
     // $esp = $esp - 0x1d0 = $ebp - 0x1d8 = $ebp - 472 bytes => Line<+9>
-    int tab[25];
+    unsigned int tab[25];
     int n = 0; //Line +44 at address $esp+0x1b4
     char buf[20]; //cf line <+341> : buffer starts at $esp+0x1b8 
     bzero(buf, 30); //20 bytes are set to 0 at lines <55 to 99> (5 * 4bytes)
